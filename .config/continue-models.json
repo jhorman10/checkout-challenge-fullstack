@@ -1,0 +1,88 @@
+{
+  "models": [
+    {
+      "title": "deepseek-ai/deepseek-v4.1-flash",
+      "provider": "openai",
+      "model": "deepseek-ai/deepseek-v4.1-flash",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "mistralai/codestral-22b-instruct-v0.1",
+      "provider": "openai",
+      "model": "mistralai/codestral-22b-instruct-v0.1",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "nvidia/llama-3.1-nemotron-70b-instruct",
+      "provider": "openai",
+      "model": "nvidia/llama-3.1-nemotron-70b-instruct",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "openai/gpt-oss-20b",
+      "provider": "openai",
+      "model": "openai/gpt-oss-20b",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "mistralai/mistral-large",
+      "provider": "openai",
+      "model": "mistralai/mistral-large",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "google/codegemma-7b",
+      "provider": "openai",
+      "model": "google/codegemma-7b",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "google/gemma-3-12b-it",
+      "provider": "openai",
+      "model": "google/gemma-3-12b-it",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "nvidia/llama-3.1-nemotron-51b-instruct",
+      "provider": "openai",
+      "model": "nvidia/llama-3.1-nemotron-51b-instruct",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "nvidia/nemotron-parse-2.0",
+      "provider": "openai",
+      "model": "nvidia/nemotron-parse-2.0",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "bigcode/starcoder2-15b",
+      "provider": "openai",
+      "model": "bigcode/starcoder2-15b",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "z-ai/glm-5.3",
+      "provider": "openai",
+      "model": "z-ai/glm-5.3",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    },
+    {
+      "title": "moonshotai/kimi-k3",
+      "provider": "openai",
+      "model": "moonshotai/kimi-k3",
+      "apiKey": "${NVIDIA_API_KEY}",
+      "baseUrl": "https://integrate.api.nvidia.com/v1"
+    }
+  ]
+}

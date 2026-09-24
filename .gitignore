@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Build outputs
+**/dist/
+**/build/
+**/.next/
+**/coverage/
+**/.turbo/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Test / temp artifacts
+.tmp/
+.tmp*/
+*.tmp
+*.local
+
+# TypeScript incremental build info
+*.tsbuildinfo
+
+# Tooling caches
+.atl/.skill-registry.cache.json
+
+# Docker local state
+postgres-data/
+volumes/

@@ -1,0 +1,36 @@
+# Git and metadata
+.git
+.gitignore
+.github
+
+# Dependencies and local installs
+node_modules
+**/node_modules
+
+# Build outputs
+**/dist
+**/build
+**/.next
+coverage
+**/coverage
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Project runtime/data
+postgres-data
+volumes
+*.log
+
+# Local temporary files
+.tmp
+**/.tmp
+*.tmp

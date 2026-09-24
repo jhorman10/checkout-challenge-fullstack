@@ -1,0 +1,16 @@
+{
+  "name": "prueba-wompi-fullstack",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "backend": "npm --prefix apps/backend run start:dev",
+    "frontend": "npm --prefix apps/frontend run dev -- --host 0.0.0.0 --port 4173",
+    "start:dev": "npm run backend & npm run frontend",
+    "test": "npm --prefix apps/backend run test && npm --prefix apps/frontend run build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
