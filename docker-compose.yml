@@ -1,19 +1,19 @@
 services:
   postgres:
     image: postgres:16-alpine
-    container_name: wompi-postgres
+    container_name: checkout-postgres
     restart: unless-stopped
     ports:
       - "5432:5432"
     environment:
-      POSTGRES_DB: wompi_checkout
+      POSTGRES_DB: checkout_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     volumes:
       - pgdata:/var/lib/postgresql/data
       - ./docker/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres -d wompi_checkout"]
+      test: ["CMD-SHELL", "pg_isready -U postgres -d checkout_db"]
       interval: 10s
       timeout: 5s
       retries: 5
@@ -23,7 +23,7 @@ services:
     build:
       context: ./apps/backend
       dockerfile: Dockerfile
-    container_name: wompi-backend
+    container_name: checkout-backend
     restart: unless-stopped
     depends_on:
       postgres:
@@ -32,11 +32,11 @@ services:
       - "3000:3000"
     environment:
       PORT: "3000"
-      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/wompi_checkout
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/checkout_db
       DB_SSL: "false"
       WOMPI_ENV: sandbox
-      WOMPI_API_KEY: ""
-      WOMPI_BASE_URL: https://sandbox.wompi.co/v1
+      WOMPI_API_KEY: prv_stagtest_your_key_here
+      WOMPI_BASE_URL: https://api-sandbox.co.uat.wompi.dev/v1
     volumes:
       - ./apps/backend:/app
       - /app/node_modules
@@ -45,7 +45,7 @@ services:
     build:
       context: ./apps/frontend
       dockerfile: Dockerfile
-    container_name: wompi-frontend
+    container_name: checkout-frontend
     restart: unless-stopped
     depends_on:
       - backend
