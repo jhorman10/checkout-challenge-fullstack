@@ -1,0 +1,715 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/": {
+      "get": {
+        "operationId": "AppController_getHello",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Welcome message"
+          }
+        },
+        "summary": "Get welcome message",
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/health": {
+      "get": {
+        "operationId": "AppController_getHealth",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Service is healthy"
+          }
+        },
+        "summary": "Health check endpoint",
+        "tags": [
+          "Health"
+        ]
+      }
+    },
+    "/api/products": {
+      "get": {
+        "operationId": "ProductsController_getProducts",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "List of products",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ProductDto"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "summary": "List all products",
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/api/products/{id}": {
+      "get": {
+        "operationId": "ProductsController_getProduct",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Product ID",
+            "schema": {
+              "example": "prod-aurora",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Product found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ProductDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Product not found"
+          }
+        },
+        "summary": "Get product by ID",
+        "tags": [
+          "Products"
+        ]
+      }
+    },
+    "/api/transactions": {
+      "post": {
+        "operationId": "TransactionsController_createTransaction",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateTransactionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Transaction created successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input or insufficient stock"
+          },
+          "409": {
+            "description": "Duplicate operation"
+          },
+          "429": {
+            "description": "Too many requests"
+          }
+        },
+        "summary": "Create a new pending transaction",
+        "tags": [
+          "Transactions"
+        ]
+      }
+    },
+    "/api/transactions/{id}": {
+      "get": {
+        "operationId": "TransactionsController_getTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Transaction ID",
+            "schema": {
+              "example": "txn-1234567890",
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Transaction found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TransactionResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Transaction not found"
+          }
+        },
+        "summary": "Get transaction by ID",
+        "tags": [
+          "Transactions"
+        ]
+      }
+    },
+    "/api/transactions/{id}/pay": {
+      "post": {
+        "operationId": "TransactionsController_payTransaction",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "description": "Transaction ID",
+            "schema": {
+              "example": "txn-1234567890",
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PayTransactionDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Payment approved",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input"
+          },
+          "402": {
+            "description": "Payment declined"
+          },
+          "404": {
+            "description": "Transaction not found"
+          },
+          "409": {
+            "description": "Duplicate operation"
+          },
+          "429": {
+            "description": "Too many requests"
+          },
+          "502": {
+            "description": "Payment provider error"
+          }
+        },
+        "summary": "Execute payment for a transaction",
+        "tags": [
+          "Transactions"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Wompi Checkout API",
+    "description": "REST API for Wompi payment checkout flow",
+    "version": "1.0.0",
+    "contact": {}
+  },
+  "tags": [
+    {
+      "name": "Products",
+      "description": "Product catalog endpoints"
+    },
+    {
+      "name": "Transactions",
+      "description": "Transaction and payment endpoints"
+    },
+    {
+      "name": "Health",
+      "description": "Health check endpoint"
+    }
+  ],
+  "servers": [],
+  "components": {
+    "securitySchemes": {
+      "bearer": {
+        "scheme": "bearer",
+        "bearerFormat": "JWT",
+        "type": "http"
+      }
+    },
+    "schemas": {
+      "ProductDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Product ID",
+            "example": "prod-aurora"
+          },
+          "name": {
+            "type": "string",
+            "description": "Product name",
+            "example": "Aurora Headphones"
+          },
+          "description": {
+            "type": "string",
+            "description": "Product description",
+            "example": "Wireless over-ear headphones with noise cancellation."
+          },
+          "price": {
+            "type": "number",
+            "description": "Product price in cents",
+            "example": 129900
+          },
+          "stock": {
+            "type": "number",
+            "description": "Available stock quantity",
+            "example": 12
+          },
+          "reserved": {
+            "type": "boolean",
+            "description": "Whether the product has reserved stock",
+            "example": false
+          },
+          "reservedQuantity": {
+            "type": "number",
+            "description": "Quantity of reserved stock",
+            "example": 0
+          },
+          "currency": {
+            "type": "string",
+            "description": "Currency code",
+            "example": "COP"
+          },
+          "imageUrl": {
+            "type": "string",
+            "description": "Product image URL",
+            "example": "https://example.com/image.jpg"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "description",
+          "price",
+          "stock",
+          "reserved",
+          "reservedQuantity",
+          "currency",
+          "imageUrl"
+        ]
+      },
+      "TransactionItemDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Product ID",
+            "example": "prod-aurora"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity",
+            "example": 1,
+            "minimum": 1
+          }
+        },
+        "required": [
+          "productId",
+          "quantity"
+        ]
+      },
+      "TransactionCustomerDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Customer full name",
+            "example": "Juan Pérez"
+          },
+          "email": {
+            "type": "string",
+            "description": "Customer email",
+            "example": "juan@example.com"
+          },
+          "documentType": {
+            "type": "string",
+            "description": "Document type",
+            "example": "CC",
+            "enum": [
+              "CC",
+              "CE",
+              "NIT",
+              "PP"
+            ]
+          },
+          "documentNumber": {
+            "type": "string",
+            "description": "Document number",
+            "example": "1234567890"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "documentType",
+          "documentNumber"
+        ]
+      },
+      "TransactionDeliveryDto": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "Delivery address",
+            "example": "Calle 123 #45-67"
+          },
+          "city": {
+            "type": "string",
+            "description": "City",
+            "example": "Bogotá"
+          },
+          "state": {
+            "type": "string",
+            "description": "State/Department",
+            "example": "Cundinamarca"
+          },
+          "postalCode": {
+            "type": "string",
+            "description": "Postal code",
+            "example": "110111"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number",
+            "example": "+573001234567"
+          }
+        },
+        "required": [
+          "address",
+          "city",
+          "state",
+          "postalCode",
+          "phone"
+        ]
+      },
+      "PaymentCardDto": {
+        "type": "object",
+        "properties": {
+          "cardNumber": {
+            "type": "string",
+            "description": "Card number",
+            "example": "4242424242424242"
+          },
+          "holderName": {
+            "type": "string",
+            "description": "Cardholder name",
+            "example": "Juan Pérez"
+          },
+          "expMonth": {
+            "type": "string",
+            "description": "Expiration month (MM)",
+            "example": "12"
+          },
+          "expYear": {
+            "type": "string",
+            "description": "Expiration year (YYYY)",
+            "example": "2026"
+          },
+          "cvv": {
+            "type": "string",
+            "description": "CVC",
+            "example": "123"
+          }
+        },
+        "required": [
+          "cardNumber",
+          "holderName",
+          "expMonth",
+          "expYear",
+          "cvv"
+        ]
+      },
+      "CreateTransactionDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Product ID (legacy single item)",
+            "example": "prod-aurora"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity (legacy single item)",
+            "example": 1,
+            "minimum": 1
+          },
+          "items": {
+            "description": "Items (preferred for multiple products)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionItemDto"
+            }
+          },
+          "customer": {
+            "description": "Customer information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionCustomerDto"
+              }
+            ]
+          },
+          "delivery": {
+            "description": "Delivery information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionDeliveryDto"
+              }
+            ]
+          },
+          "payment": {
+            "description": "Payment card information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentCardDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "customer",
+          "delivery",
+          "payment"
+        ]
+      },
+      "TransactionItemResponseDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Product ID",
+            "example": "prod-aurora"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "description": "Amount in cents",
+            "example": 129900
+          }
+        },
+        "required": [
+          "productId",
+          "quantity",
+          "amount"
+        ]
+      },
+      "TransactionResponseDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "Transaction ID",
+            "example": "txn-1234567890"
+          },
+          "reference": {
+            "type": "string",
+            "description": "Transaction reference",
+            "example": "TXN-123456789-100"
+          },
+          "productId": {
+            "type": "string",
+            "description": "Primary product ID",
+            "example": "prod-aurora"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Total quantity",
+            "example": 1
+          },
+          "amount": {
+            "type": "number",
+            "description": "Items amount in cents (without fees)",
+            "example": 129900
+          },
+          "items": {
+            "description": "Transaction items",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionItemResponseDto"
+            }
+          },
+          "baseFee": {
+            "type": "number",
+            "description": "Base fee in cents",
+            "example": 12000
+          },
+          "deliveryFee": {
+            "type": "number",
+            "description": "Delivery fee in cents",
+            "example": 9000
+          },
+          "total": {
+            "type": "number",
+            "description": "Total amount in cents",
+            "example": 150900
+          },
+          "status": {
+            "type": "string",
+            "description": "Transaction status",
+            "enum": [
+              "pending",
+              "approved",
+              "failed"
+            ],
+            "example": "pending"
+          },
+          "customer": {
+            "type": "object",
+            "description": "Customer information"
+          },
+          "delivery": {
+            "type": "object",
+            "description": "Delivery information"
+          },
+          "providerStatus": {
+            "type": "string",
+            "description": "Provider status",
+            "example": "APPROVED"
+          },
+          "errorMessage": {
+            "type": "string",
+            "description": "Error message if failed",
+            "example": "Insufficient funds"
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "Creation timestamp",
+            "example": "2024-01-15T10:30:00.000Z"
+          }
+        },
+        "required": [
+          "id",
+          "reference",
+          "productId",
+          "quantity",
+          "amount",
+          "items",
+          "baseFee",
+          "deliveryFee",
+          "total",
+          "status",
+          "customer",
+          "delivery",
+          "createdAt"
+        ]
+      },
+      "PayTransactionDto": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "string",
+            "description": "Product ID (legacy single item)",
+            "example": "prod-aurora"
+          },
+          "quantity": {
+            "type": "number",
+            "description": "Quantity (legacy single item)",
+            "example": 1,
+            "minimum": 1
+          },
+          "items": {
+            "description": "Items (preferred for multiple products)",
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TransactionItemDto"
+            }
+          },
+          "customer": {
+            "description": "Customer information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionCustomerDto"
+              }
+            ]
+          },
+          "delivery": {
+            "description": "Delivery information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionDeliveryDto"
+              }
+            ]
+          },
+          "payment": {
+            "description": "Payment card information",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/PaymentCardDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "customer",
+          "delivery",
+          "payment"
+        ]
+      },
+      "PaymentResponseDto": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "description": "Whether payment was successful",
+            "example": true
+          },
+          "message": {
+            "type": "string",
+            "description": "Response message",
+            "example": "Pago aprobado"
+          },
+          "transaction": {
+            "description": "Transaction details",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/TransactionResponseDto"
+              }
+            ]
+          }
+        },
+        "required": [
+          "success",
+          "message",
+          "transaction"
+        ]
+      }
+    }
+  }
+}

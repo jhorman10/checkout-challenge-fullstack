@@ -1,0 +1,1082 @@
+{
+  "item": [
+    {
+      "id": "e32ba11f-7672-4ea8-b129-ae839a3e264d",
+      "name": "Get welcome message",
+      "request": {
+        "name": "Get welcome message",
+        "description": {},
+        "url": {
+          "path": [
+            ""
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "7fb1f6cf-40ed-4faf-a217-c001e3b2bf81",
+          "name": "Welcome message",
+          "originalRequest": {
+            "url": {
+              "path": [
+                ""
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "c393254c-25b8-485a-80ad-1aff6ae49117",
+      "name": "Health check endpoint",
+      "request": {
+        "name": "Health check endpoint",
+        "description": {},
+        "url": {
+          "path": [
+            "health"
+          ],
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "query": [],
+          "variable": []
+        },
+        "method": "GET",
+        "auth": null
+      },
+      "response": [
+        {
+          "id": "612a0533-f482-4b13-b118-ac992a1847c6",
+          "name": "Service is healthy",
+          "originalRequest": {
+            "url": {
+              "path": [
+                "health"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "method": "GET",
+            "body": {}
+          },
+          "status": "OK",
+          "code": 200,
+          "header": [
+            {
+              "key": "Content-Type",
+              "value": "text/plain"
+            }
+          ],
+          "body": "",
+          "cookie": [],
+          "_postman_previewlanguage": "text"
+        }
+      ],
+      "event": [],
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      }
+    },
+    {
+      "id": "b8221875-70d1-4640-93e8-ba334920625b",
+      "name": "api",
+      "item": [
+        {
+          "id": "2e8c645c-78f8-4ae7-bf65-3e5b327f7f85",
+          "name": "products",
+          "item": [
+            {
+              "id": "4407a101-f7a0-43ba-8881-9a7855d47eb1",
+              "name": "List all products",
+              "request": {
+                "name": "List all products",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "products"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null
+              },
+              "response": [
+                {
+                  "id": "849d5eaa-5f3a-4d23-9e6c-64adcfe7b5f1",
+                  "name": "List of products",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "products"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "[\n  {\n    \"id\": \"prod-aurora\",\n    \"name\": \"Aurora Headphones\",\n    \"description\": \"Wireless over-ear headphones with noise cancellation.\",\n    \"price\": 129900,\n    \"stock\": 12,\n    \"reserved\": false,\n    \"reservedQuantity\": 0,\n    \"currency\": \"COP\",\n    \"imageUrl\": \"https://example.com/image.jpg\"\n  },\n  {\n    \"id\": \"prod-aurora\",\n    \"name\": \"Aurora Headphones\",\n    \"description\": \"Wireless over-ear headphones with noise cancellation.\",\n    \"price\": 129900,\n    \"stock\": 12,\n    \"reserved\": false,\n    \"reservedQuantity\": 0,\n    \"currency\": \"COP\",\n    \"imageUrl\": \"https://example.com/image.jpg\"\n  }\n]",
+                  "cookie": [],
+                  "_postman_previewlanguage": "json"
+                }
+              ],
+              "event": [],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            },
+            {
+              "id": "34913e9f-3fff-458a-8493-3e92e35cd613",
+              "name": "Get product by ID",
+              "request": {
+                "name": "Get product by ID",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "products",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "id",
+                      "description": "(Required) Product ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "auth": null
+              },
+              "response": [
+                {
+                  "id": "766f3bb7-28e9-4fd9-9d50-b22f5c11f9dd",
+                  "name": "Product found",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "products",
+                        ":id"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "type": "any",
+                          "value": "<string>",
+                          "key": "id",
+                          "description": "(Required) Product ID"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"id\": \"prod-aurora\",\n  \"name\": \"Aurora Headphones\",\n  \"description\": \"Wireless over-ear headphones with noise cancellation.\",\n  \"price\": 129900,\n  \"stock\": 12,\n  \"reserved\": false,\n  \"reservedQuantity\": 0,\n  \"currency\": \"COP\",\n  \"imageUrl\": \"https://example.com/image.jpg\"\n}",
+                  "cookie": [],
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "id": "ffecaef8-427c-4312-89c8-ac6670c93e77",
+                  "name": "Product not found",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "products",
+                        ":id"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "type": "any",
+                          "value": "<string>",
+                          "key": "id",
+                          "description": "(Required) Product ID"
+                        }
+                      ]
+                    },
+                    "method": "GET",
+                    "body": {}
+                  },
+                  "status": "Not Found",
+                  "code": 404,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "body": "",
+                  "cookie": [],
+                  "_postman_previewlanguage": "text"
+                }
+              ],
+              "event": [],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            }
+          ],
+          "event": []
+        },
+        {
+          "id": "c0c7cb10-ac22-4515-8c8e-fc062fae2ae2",
+          "name": "transactions",
+          "item": [
+            {
+              "id": "4cbd80ba-af40-4047-8bae-22d5cba91d05",
+              "name": "Create a new pending transaction",
+              "request": {
+                "name": "Create a new pending transaction",
+                "description": {},
+                "url": {
+                  "path": [
+                    "api",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "auth": null,
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<string>\",\n    \"documentType\": \"<string>\",\n    \"documentNumber\": \"<string>\"\n  },\n  \"delivery\": {\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"phone\": \"<string>\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"<string>\",\n    \"holderName\": \"<string>\",\n    \"expMonth\": \"<string>\",\n    \"expYear\": \"<string>\",\n    \"cvv\": \"<string>\"\n  },\n  \"productId\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"items\": [\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<number>\"\n    },\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<number>\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [
+                {
+                  "id": "8d82562e-fb61-470d-bb29-a6a4682f4f74",
+                  "name": "Transaction created successfully",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "application/json"
+                    }
+                  ],
+                  "body": "{\n  \"id\": \"txn-1234567890\",\n  \"reference\": \"TXN-123456789-100\",\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"amount\": 129900,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1,\n      \"amount\": 129900\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1,\n      \"amount\": 129900\n    }\n  ],\n  \"baseFee\": 12000,\n  \"deliveryFee\": 9000,\n  \"total\": 150900,\n  \"status\": \"pending\",\n  \"customer\": {},\n  \"delivery\": {},\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"providerStatus\": \"APPROVED\",\n  \"errorMessage\": \"Insufficient funds\"\n}",
+                  "cookie": [],
+                  "_postman_previewlanguage": "json"
+                },
+                {
+                  "id": "66ef34ef-b878-4ee6-b2a2-27d4a4c7ff2e",
+                  "name": "Invalid input or insufficient stock",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "body": "",
+                  "cookie": [],
+                  "_postman_previewlanguage": "text"
+                },
+                {
+                  "id": "20b81718-66be-400e-b6d0-da939138dfcc",
+                  "name": "Duplicate operation",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Conflict",
+                  "code": 409,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "body": "",
+                  "cookie": [],
+                  "_postman_previewlanguage": "text"
+                },
+                {
+                  "id": "64f38ff1-7c01-490f-bebd-6dd072f9278d",
+                  "name": "Too many requests",
+                  "originalRequest": {
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": []
+                    },
+                    "method": "POST",
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "status": "Too Many Requests",
+                  "code": 429,
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "text/plain"
+                    }
+                  ],
+                  "body": "",
+                  "cookie": [],
+                  "_postman_previewlanguage": "text"
+                }
+              ],
+              "event": [],
+              "protocolProfileBehavior": {
+                "disableBodyPruning": true
+              }
+            },
+            {
+              "id": "13256bb6-a582-464d-be04-65d9944835bd",
+              "name": "{id}",
+              "item": [
+                {
+                  "id": "8545e915-d15e-4369-80e3-0217339e9fb0",
+                  "name": "Get transaction by ID",
+                  "request": {
+                    "name": "Get transaction by ID",
+                    "description": {},
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions",
+                        ":id"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "type": "any",
+                          "value": "<string>",
+                          "key": "id",
+                          "description": "(Required) Transaction ID"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "GET",
+                    "auth": null
+                  },
+                  "response": [
+                    {
+                      "id": "d10b6849-f4be-4b7e-ac33-1110de5036bf",
+                      "name": "Transaction found",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "method": "GET",
+                        "body": {}
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"id\": \"txn-1234567890\",\n  \"reference\": \"TXN-123456789-100\",\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"amount\": 129900,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1,\n      \"amount\": 129900\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1,\n      \"amount\": 129900\n    }\n  ],\n  \"baseFee\": 12000,\n  \"deliveryFee\": 9000,\n  \"total\": 150900,\n  \"status\": \"pending\",\n  \"customer\": {},\n  \"delivery\": {},\n  \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n  \"providerStatus\": \"APPROVED\",\n  \"errorMessage\": \"Insufficient funds\"\n}",
+                      "cookie": [],
+                      "_postman_previewlanguage": "json"
+                    },
+                    {
+                      "id": "25de0c42-f7d0-4408-8f13-095619dcfa96",
+                      "name": "Transaction not found",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "GET",
+                        "body": {}
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    }
+                  ],
+                  "event": [],
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  }
+                },
+                {
+                  "id": "85190a7b-64bd-4237-acc3-17f0834bd044",
+                  "name": "Execute payment for a transaction",
+                  "request": {
+                    "name": "Execute payment for a transaction",
+                    "description": {},
+                    "url": {
+                      "path": [
+                        "api",
+                        "transactions",
+                        ":id",
+                        "pay"
+                      ],
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "query": [],
+                      "variable": [
+                        {
+                          "disabled": false,
+                          "type": "any",
+                          "value": "<string>",
+                          "key": "id",
+                          "description": "(Required) Transaction ID"
+                        }
+                      ]
+                    },
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "application/json"
+                      }
+                    ],
+                    "method": "POST",
+                    "auth": null,
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"customer\": {\n    \"name\": \"<string>\",\n    \"email\": \"<string>\",\n    \"documentType\": \"<string>\",\n    \"documentNumber\": \"<string>\"\n  },\n  \"delivery\": {\n    \"address\": \"<string>\",\n    \"city\": \"<string>\",\n    \"state\": \"<string>\",\n    \"postalCode\": \"<string>\",\n    \"phone\": \"<string>\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"<string>\",\n    \"holderName\": \"<string>\",\n    \"expMonth\": \"<string>\",\n    \"expYear\": \"<string>\",\n    \"cvv\": \"<string>\"\n  },\n  \"productId\": \"<string>\",\n  \"quantity\": \"<number>\",\n  \"items\": [\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<number>\"\n    },\n    {\n      \"productId\": \"<string>\",\n      \"quantity\": \"<number>\"\n    }\n  ]\n}",
+                      "options": {
+                        "raw": {
+                          "language": "json"
+                        }
+                      }
+                    }
+                  },
+                  "response": [
+                    {
+                      "id": "124b7897-1a7b-4e5c-9061-ffcbd8a5daee",
+                      "name": "Payment approved",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "application/json"
+                          }
+                        ],
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Created",
+                      "code": 201,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "application/json"
+                        }
+                      ],
+                      "body": "{\n  \"success\": true,\n  \"message\": \"Pago aprobado\",\n  \"transaction\": {\n    \"id\": \"txn-1234567890\",\n    \"reference\": \"TXN-123456789-100\",\n    \"productId\": \"prod-aurora\",\n    \"quantity\": 1,\n    \"amount\": 129900,\n    \"items\": [\n      {\n        \"productId\": \"prod-aurora\",\n        \"quantity\": 1,\n        \"amount\": 129900\n      },\n      {\n        \"productId\": \"prod-aurora\",\n        \"quantity\": 1,\n        \"amount\": 129900\n      }\n    ],\n    \"baseFee\": 12000,\n    \"deliveryFee\": 9000,\n    \"total\": 150900,\n    \"status\": \"pending\",\n    \"customer\": {},\n    \"delivery\": {},\n    \"createdAt\": \"2024-01-15T10:30:00.000Z\",\n    \"providerStatus\": \"APPROVED\",\n    \"errorMessage\": \"Insufficient funds\"\n  }\n}",
+                      "cookie": [],
+                      "_postman_previewlanguage": "json"
+                    },
+                    {
+                      "id": "fbc8f2eb-8e4b-40ed-8ee9-43425f2979ae",
+                      "name": "Invalid input",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    },
+                    {
+                      "id": "cf0bcba0-404d-4f05-bfa9-9bc4086d4177",
+                      "name": "Payment declined",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Payment Required",
+                      "code": 402,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    },
+                    {
+                      "id": "b8d454bc-ddd3-4292-ab29-70edae92286e",
+                      "name": "Transaction not found",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    },
+                    {
+                      "id": "67e759af-e27f-4705-aae7-4943b3f534bb",
+                      "name": "Duplicate operation",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Conflict",
+                      "code": 409,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    },
+                    {
+                      "id": "517b6c82-3d0f-45d1-b4f5-679d54781500",
+                      "name": "Too many requests",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Too Many Requests",
+                      "code": 429,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    },
+                    {
+                      "id": "ae7bd20e-3df9-486a-834c-413eddcd19ee",
+                      "name": "Payment provider error",
+                      "originalRequest": {
+                        "url": {
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id",
+                            "pay"
+                          ],
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "query": [],
+                          "variable": [
+                            {
+                              "disabled": false,
+                              "type": "any",
+                              "value": "<string>",
+                              "key": "id",
+                              "description": "(Required) Transaction ID"
+                            }
+                          ]
+                        },
+                        "method": "POST",
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"customer\": {\n    \"name\": \"Juan Pérez\",\n    \"email\": \"juan@example.com\",\n    \"documentType\": \"CC\",\n    \"documentNumber\": \"1234567890\"\n  },\n  \"delivery\": {\n    \"address\": \"Calle 123 #45-67\",\n    \"city\": \"Bogotá\",\n    \"state\": \"Cundinamarca\",\n    \"postalCode\": \"110111\",\n    \"phone\": \"+573001234567\"\n  },\n  \"payment\": {\n    \"cardNumber\": \"4242424242424242\",\n    \"holderName\": \"Juan Pérez\",\n    \"expMonth\": \"12\",\n    \"expYear\": \"2026\",\n    \"cvv\": \"123\"\n  },\n  \"productId\": \"prod-aurora\",\n  \"quantity\": 1,\n  \"items\": [\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    },\n    {\n      \"productId\": \"prod-aurora\",\n      \"quantity\": 1\n    }\n  ]\n}",
+                          "options": {
+                            "raw": {
+                              "language": "json"
+                            }
+                          }
+                        }
+                      },
+                      "status": "Bad Gateway",
+                      "code": 502,
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "text/plain"
+                        }
+                      ],
+                      "body": "",
+                      "cookie": [],
+                      "_postman_previewlanguage": "text"
+                    }
+                  ],
+                  "event": [],
+                  "protocolProfileBehavior": {
+                    "disableBodyPruning": true
+                  }
+                }
+              ],
+              "event": []
+            }
+          ],
+          "event": []
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "/",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "a914754c-be4e-4f6a-8dd2-26c127b73e30",
+    "name": "Wompi Checkout API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for Wompi payment checkout flow",
+      "type": "text/plain"
+    }
+  }
+}

@@ -183,6 +183,9 @@ The API must provide a clean domain model and meaningful validation. It should h
 
 ## 5. Data model
 
+> **⚠️ DEPRECATED:** The authoritative data model is now in [`README.md#data-model`](../README.md#data-model).
+> This section is retained for historical reference only and may diverge.
+
 ### 5.1 Entities
 
 #### Product
