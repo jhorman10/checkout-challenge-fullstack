@@ -10,7 +10,7 @@ export class DatabaseService implements OnModuleInit {
   constructor(private readonly configService: ConfigService) {
     const connectionString =
       this.configService.get<string>('DATABASE_URL') ??
-      'postgresql://postgres:postgres@localhost:5432/wompi_checkout';
+      'postgresql://postgres:postgres@localhost:5432/checkout_db';
 
     this.pool = new Pool({
       connectionString,
