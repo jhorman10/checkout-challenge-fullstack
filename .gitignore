@@ -44,3 +44,4 @@ Thumbs.db
 # Docker local state
 postgres-data/
 volumes/
+terraform/.terraform/
