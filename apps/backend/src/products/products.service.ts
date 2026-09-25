@@ -1,5 +1,8 @@
 import { Injectable, Optional } from '@nestjs/common';
+import { DomainError, domainError } from '../shared/errors.js';
+import { Result, err, ok } from '../shared/result.js';
 import { DatabaseService } from '../database/database.service.js';
+import { ProductDto } from './dto/product.dto.js';
 
 export interface Product {
   id: string;
@@ -49,6 +52,20 @@ const defaultProducts: Product[] = [
   },
 ];
 
+function toDto(product: Product): ProductDto {
+  const dto = new ProductDto();
+  dto.id = product.id;
+  dto.name = product.name;
+  dto.description = product.description;
+  dto.price = product.price;
+  dto.stock = product.stock;
+  dto.reserved = product.reserved;
+  dto.reservedQuantity = product.reservedQuantity;
+  dto.currency = product.currency;
+  dto.imageUrl = product.imageUrl;
+  return dto;
+}
+
 @Injectable()
 export class ProductsService {
   private readonly products: Product[];
@@ -60,68 +77,57 @@ export class ProductsService {
     this.products = (initialProducts ?? defaultProducts).map((product) => ({ ...product, reserved: !!product.reserved, reservedQuantity: product.reservedQuantity ?? 0 }));
   }
 
-  listProducts(): Product[] {
-    return this.products.map((product) => ({ ...product }));
+  listProducts(): ProductDto[] {
+    return this.products.map((product) => toDto(product));
   }
 
-  findProductById(productId: string): Product | undefined {
-    return this.products.find((product) => product.id === productId);
+  findProductById(productId: string): ProductDto | undefined {
+    const product = this.products.find((product) => product.id === productId);
+    return product ? toDto(product) : undefined;
   }
 
-  reserveStock(productId: string, quantity: number): { success: boolean; message: string; product?: Product } {
-    const product = this.findProductById(productId);
+  reserveStock(productId: string, quantity: number): Result<ProductDto, DomainError> {
+    const product = this.products.find((product) => product.id === productId);
 
     if (!product) {
-      return { success: false, message: 'Product not found' };
+      return err(domainError('PRODUCT_NOT_FOUND'));
     }
 
     if (product.stock < quantity) {
-      return { success: false, message: 'Insufficient stock available' };
+      return err(domainError('INSUFFICIENT_STOCK', `Insufficient stock for ${product.name}`));
     }
 
     product.stock -= quantity;
     product.reserved = true;
     product.reservedQuantity = quantity;
 
-    return {
-      success: true,
-      message: 'Stock reserved while payment is being processed',
-      product: { ...product },
-    };
+    return ok(toDto(product));
   }
 
-  releaseReservedStock(productId: string, quantity: number): { success: boolean; message: string; product?: Product } {
-    const product = this.findProductById(productId);
+  releaseReservedStock(productId: string, quantity: number): Result<ProductDto, DomainError> {
+    const product = this.products.find((product) => product.id === productId);
 
     if (!product) {
-      return { success: false, message: 'Product not found' };
+      return err(domainError('PRODUCT_NOT_FOUND'));
     }
 
     product.stock += quantity;
     product.reserved = false;
     product.reservedQuantity = 0;
 
-    return {
-      success: true,
-      message: 'Reserved stock released',
-      product: { ...product },
-    };
+    return ok(toDto(product));
   }
 
-  completeReservedStock(productId: string): { success: boolean; message: string; product?: Product } {
-    const product = this.findProductById(productId);
+  completeReservedStock(productId: string): Result<ProductDto, DomainError> {
+    const product = this.products.find((product) => product.id === productId);
 
     if (!product) {
-      return { success: false, message: 'Product not found' };
+      return err(domainError('PRODUCT_NOT_FOUND'));
     }
 
     product.reserved = false;
     product.reservedQuantity = 0;
 
-    return {
-      success: true,
-      message: 'Reservation cleared after payment confirmation',
-      product: { ...product },
-    };
+    return ok(toDto(product));
   }
 }

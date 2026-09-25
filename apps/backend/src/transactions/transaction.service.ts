@@ -1,6 +1,9 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
+import { DomainError, domainError } from '../shared/errors.js';
+import { Result, err, isErr, ok } from '../shared/result.js';
 import { ProductsService } from '../products/products.service.js';
 import { WompiService } from '../wompi/wompi.service.js';
+import { WompiCustomerDto, WompiCardDto } from '../wompi/dto/wompi.dto.js';
 
 export interface TransactionCustomer {
   name: string;
@@ -73,6 +76,25 @@ export interface TransactionRecord {
   createdAt: string;
 }
 
+function toWompiCustomer(customer: TransactionCustomer): WompiCustomerDto {
+  const dto = new WompiCustomerDto();
+  dto.fullName = customer.name;
+  dto.email = customer.email;
+  dto.legalId = customer.documentNumber;
+  dto.legalIdType = customer.documentType as 'CC' | 'CE' | 'NIT' | 'PP';
+  return dto;
+}
+
+function toWompiCard(payment: PaymentCard): WompiCardDto {
+  const dto = new WompiCardDto();
+  dto.number = payment.cardNumber;
+  dto.holder = payment.holderName;
+  dto.expMonth = payment.expMonth;
+  dto.expYear = payment.expYear;
+  dto.cvc = payment.cvv;
+  return dto;
+}
+
 @Injectable()
 export class TransactionService {
   private readonly transactions = new Map<string, TransactionRecord>();
@@ -84,33 +106,29 @@ export class TransactionService {
     private readonly wompiService: WompiService,
   ) {}
 
-  async createPendingTransaction(payload: CreateTransactionRequest): Promise<TransactionRecord> {
-    const items = payload.items && payload.items.length > 0 ? payload.items : payload.productId && typeof payload.quantity === 'number'
-      ? [{ productId: payload.productId, quantity: payload.quantity }]
-      : [];
+  async createPendingTransaction(
+    payload: CreateTransactionRequest,
+  ): Promise<Result<TransactionRecord, DomainError>> {
+    const items = payload.items && payload.items.length > 0
+      ? payload.items
+      : payload.productId && typeof payload.quantity === 'number'
+        ? [{ productId: payload.productId, quantity: payload.quantity }]
+        : [];
 
     if (items.length === 0) {
-      throw new BadRequestException('No products were provided for this transaction');
+      return err(domainError('INVALID_INPUT', 'No products were provided for this transaction'));
     }
 
     const normalizedItems: TransactionItemRecord[] = [];
 
     for (const item of items) {
-      const product = this.productsService.findProductById(item.productId);
-
-      if (!product) {
-        throw new BadRequestException(`Product not found: ${item.productId}`);
-      }
-
-      if (product.stock < item.quantity) {
-        throw new BadRequestException(`Insufficient stock available for ${product.name}`);
-      }
-
       const stockResult = this.productsService.reserveStock(item.productId, item.quantity);
 
-      if (!stockResult.success) {
-        throw new BadRequestException(stockResult.message);
+      if (isErr(stockResult)) {
+        return err(stockResult.error);
       }
+
+      const product = stockResult.value;
 
       normalizedItems.push({
         productId: item.productId,
@@ -141,26 +159,29 @@ export class TransactionService {
 
     this.transactions.set(record.id, record);
 
+    // Fire-and-forget registration of payment attempt
     void this.wompiService.registerPaymentAttempt({
       reference,
       amount: record.total,
       currency: 'COP',
-      customer: payload.customer,
+      customer: toWompiCustomer(payload.customer),
       transactionId: record.id,
     });
 
-    return record;
+    return ok(record);
   }
 
   getTransaction(transactionId: string): TransactionRecord | null {
     return this.transactions.get(transactionId) ?? null;
   }
 
-  async pay(payload: PaymentExecutionRequest): Promise<{ success: boolean; message: string; transaction?: TransactionRecord }> {
+  async pay(
+    payload: PaymentExecutionRequest,
+  ): Promise<Result<TransactionRecord, DomainError>> {
     const transaction = this.transactions.get(payload.transactionId);
 
     if (!transaction) {
-      return { success: false, message: 'Transaction not found' };
+      return err(domainError('INVALID_INPUT', 'Transaction not found'));
     }
 
     const itemsToProcess = payload.items && payload.items.length > 0
@@ -169,54 +190,52 @@ export class TransactionService {
         ? [{ productId: payload.productId, quantity: payload.quantity }]
         : transaction.items.map(({ productId, quantity }) => ({ productId, quantity }));
 
-    const product = this.productsService.findProductById(itemsToProcess[0].productId);
-
-    if (!product) {
-      return { success: false, message: 'Product not found' };
-    }
-
-    const cleanedCard = payload.payment.cardNumber.replace(/\s+/g, '');
-    const isApproved = /^4\d{15}$/.test(cleanedCard) || /^5\d{15}$/.test(cleanedCard);
-
-    if (!isApproved) {
-      for (const item of itemsToProcess) {
-        this.productsService.releaseReservedStock(item.productId, item.quantity);
-      }
-      transaction.status = 'failed';
-      transaction.providerStatus = 'rejected';
-      transaction.errorMessage = 'Card rejected by payment provider';
-      return { success: false, message: 'Payment rejected. Please verify the card details.', transaction };
-    }
-
-    const providerResult = await this.wompiService.authorizePayment({
+    const wompiResult = await this.wompiService.authorizePayment({
       amount: transaction.total,
       reference: transaction.reference,
       currency: 'COP',
-      customer: transaction.customer,
-      payment: payload.payment,
+      customer: toWompiCustomer(transaction.customer),
+      payment: toWompiCard(payload.payment),
     });
 
-    if (!providerResult.success) {
-      const providerMessage = providerResult.message ?? 'Payment failed';
+    if (isErr(wompiResult)) {
+      // Payment provider error (network, timeout, etc.)
       for (const item of itemsToProcess) {
         this.productsService.releaseReservedStock(item.productId, item.quantity);
       }
       transaction.status = 'failed';
-      transaction.providerStatus = providerResult.providerStatus ?? 'rejected';
-      transaction.errorMessage = providerMessage;
-      return { success: false, message: providerMessage, transaction };
+      transaction.providerStatus = 'provider_error';
+      transaction.errorMessage = wompiResult.error.message;
+      return err(wompiResult.error);
     }
 
+    const { mapped, rawProviderStatus } = wompiResult.value;
+
+    if (mapped.status === 'failed') {
+      // Payment declined by provider (DECLINED, ERROR, VOIDED)
+      for (const item of itemsToProcess) {
+        this.productsService.releaseReservedStock(item.productId, item.quantity);
+      }
+      transaction.status = 'failed';
+      transaction.providerStatus = rawProviderStatus;
+      transaction.errorMessage = mapped.error?.message ?? 'Payment rejected by provider';
+      return err(mapped.error ?? domainError('PAYMENT_DECLINED', 'Payment rejected by provider'));
+    }
+
+    if (mapped.status === 'pending') {
+      // Payment pending (e.g., 3DS redirect needed)
+      transaction.status = 'pending';
+      transaction.providerStatus = rawProviderStatus;
+      return ok(transaction);
+    }
+
+    // Payment approved
     for (const item of itemsToProcess) {
       this.productsService.completeReservedStock(item.productId);
     }
     transaction.status = 'approved';
-    transaction.providerStatus = providerResult.providerStatus ?? 'approved';
+    transaction.providerStatus = rawProviderStatus;
 
-    return {
-      success: true,
-      message: 'Payment completed successfully',
-      transaction,
-    };
+    return ok(transaction);
   }
 }

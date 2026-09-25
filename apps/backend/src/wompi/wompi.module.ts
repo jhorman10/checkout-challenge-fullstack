@@ -1,10 +1,11 @@
 import { Module } from '@nestjs/common';
-import { HttpModule } from '@nestjs/axios';
+import { ConfigModule } from '@nestjs/config';
 import { WompiService } from './wompi.service.js';
+import { WompiClient } from './wompi.client.js';
 
 @Module({
-  imports: [HttpModule.register({ timeout: 10000, maxContentLength: 10485760 })],
-  providers: [WompiService],
-  exports: [WompiService],
+  imports: [ConfigModule],
+  providers: [WompiClient, WompiService],
+  exports: [WompiClient, WompiService],
 })
 export class WompiModule {}
